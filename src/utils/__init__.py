@@ -1,1 +1,1 @@
-from .cuda_utils import initialize_cuda
+from .cuda_utils import validate_cuda

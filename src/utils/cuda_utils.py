@@ -1,8 +1,10 @@
 import torch
 
-def initialize_cuda():
+def validate_cuda():
     if torch.cuda.is_available():
-        device = torch.device('cuda')
-        print(f"Usando dispositivo CUDA: {torch.cuda.get_device_name(device)}")
+        device_name = torch.cuda.get_device_name(0)
+        print(f"CUDA está disponible. Usando dispositivo: {device_name}")
+        return True
     else:
-        print("CUDA no está disponible. Usando CPU.")
+        print("CUDA no está disponible.")
+        return False

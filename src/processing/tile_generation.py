@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 from osgeo import gdal
+from utils.cuda_utils import validate_cuda
 
 class TileGenerator:
     def __init__(self, input_file, output_dir):
@@ -9,6 +10,11 @@ class TileGenerator:
         self.output_dir = output_dir
 
     def generate_tiles(self, zoom_min=0, zoom_max=18):
+        # Validar que CUDA esté disponible
+        if not validate_cuda():
+            print("Error: CUDA no está disponible. No se puede continuar.")
+            return
+
         # Validar que el archivo de entrada exista
         if not os.path.exists(self.input_file):
             print(f"Error: El archivo de entrada no existe: {self.input_file}")
@@ -28,7 +34,7 @@ class TileGenerator:
         # Ruta completa de gdal2tiles.py
         gdal2tiles_path = os.path.join(os.path.dirname(sys.executable), 'Scripts', 'gdal2tiles.py')
 
-        # Comando para generar tiles usando gdal2tiles.py
+        # Comando para generar tiles usando gdal2tiles.py con soporte para CUDA
         command = [
             sys.executable,  # Usar el ejecutable de Python del entorno actual
             gdal2tiles_path,
@@ -37,6 +43,9 @@ class TileGenerator:
             '-r', 'near',  # Resampling method
             '-p', 'mercator',  # Profile
             '-t', 'tiles',  # Title
+            '--config', 'GDAL_CACHEMAX', '1024',  # Configurar la caché de GDAL
+            '--config', 'GDAL_NUM_THREADS', 'ALL_CPUS',  # Usar todos los núcleos de la CPU
+            '--config', 'GDAL_USE_CUDA', 'YES',  # Habilitar el uso de CUDA
             self.input_file,
             self.output_dir
         ]

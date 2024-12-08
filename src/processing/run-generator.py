@@ -21,10 +21,10 @@ def validate_proj_lib():
 if not validate_proj_lib():
     sys.exit(1)
 
-# Agregar el directorio del módulo tile_generation al PYTHONPATH
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src', 'processing'))
+# Agregar el directorio del módulo tile_generation y utils al PYTHONPATH
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
 
-from tile_generation import TileGenerator
+from processing.tile_generation import TileGenerator
 
 # Configura tus rutas
 INPUT_FILE = r"E:\entrenamientomaquina\tilescompletos\raster2018.tif"
@@ -32,4 +32,4 @@ OUTPUT_DIR = r"E:\entrenamientomaquina\tiles generados\2018"
 
 # Ejecuta el generador
 generator = TileGenerator(INPUT_FILE, OUTPUT_DIR)
-generator.generate_tiles(zoom_min=12, zoom_max=15)
+generator.generate_tiles(zoom_min=10, zoom_max=10)

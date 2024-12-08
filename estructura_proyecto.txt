@@ -8,7 +8,117 @@ GenerarTiles/
     generate_structure.py
     README.md
     symbology-style.db
+    validate_environment.py
     validate_qgis_environment.py
+    viewer.html
+    .git/
+        COMMIT_EDITMSG
+        config
+        description
+        HEAD
+        index
+        hooks/
+            applypatch-msg.sample
+            commit-msg.sample
+            fsmonitor-watchman.sample
+            post-update.sample
+            pre-applypatch.sample
+            pre-commit.sample
+            pre-merge-commit.sample
+            pre-push.sample
+            pre-rebase.sample
+            pre-receive.sample
+            prepare-commit-msg.sample
+            push-to-checkout.sample
+            sendemail-validate.sample
+            update.sample
+        info/
+            exclude
+        logs/
+            HEAD
+            refs/
+                heads/
+                    main
+                remotes/
+                    origin/
+                        main
+        objects/
+            0d/
+                75bb126f919a5213522da936cfed9332f774cb
+            26/
+                5d3edd71c756c684cc27d0fda060f88ea504fb
+            35/
+                7017ef9598e0b59a67563a60a429d18ca41364
+            45/
+                f3164aefb27356d935451ec438c77623d76cf6
+            47/
+                45cda5c9b40dcc16d7795921c6bd3d55e637cc
+            49/
+                efd807edba96b0ea258937bb9eaa8572afe917
+            52/
+                c7b37331b3566dd29b8d3714413741f8ea7d90
+            58/
+                25e70b37f341bce5247ce4258cb9da370991b7
+            63/
+                3493882e068514e6949ba82397d81fb832997d
+            64/
+                6c7429e551081e7b282706c55853a65cabc215
+            65/
+                ca0b6cf341a1517ce026e4d550a72cded4326c
+            68/
+                6aac64d663eb68eb383819e2b892f2971090a7
+            73/
+                4883fb3c80969e472df0dea0266e146b7df049
+            79/
+                0d8b4b1d6cded2b1d0c00b8224296d56a2ee09
+            8a/
+                0ada204df62bb702e1f3c8ac53bee1623f15fa
+            8c/
+                1ef8030875c4e808fe19a0b7a70517508daa54
+            96/
+                22ab705776007246066da10eabee703f136382
+            9d/
+                1dcfdaf1a6857c5f83dc27019c7600e1ffaff8
+            a8/
+                c104abbd9e868394c3794271097426f7c81cb5
+            aa/
+                820686c41ad6032acba42a5d1b6d79a52977f5
+            ad/
+                8e420ac011b6901c6206ab3340dfc36fa006b0
+            b7/
+                1769a186570537489ea0f07fbe6057344a8f0d
+            b8/
+                2a224b833115870fe432768f8cddee7c27ec83
+                c6cf929fcf0974b31b2de55dc5863bb09a2048
+            bb/
+                3b2343fdef6f4b344b3410aa4aba8f1f9c4481
+            c2/
+                edfed081464271881aee95cef7e82c2a21a896
+            ce/
+                56418552555303e9f54b7fec7c691ed8c6cca1
+                786c1ccf46c6a974966999e2877c7d9a05338f
+            e0/
+                10622613481a2d6ba987a8b51990c601b0c706
+            e4/
+                9b6f8b1dcc0d7a69895da34c47971388f1238e
+                d593cf6958bbf3c7b9f53bb1a1b6cc6b5b94aa
+            e6/
+                9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+            ec/
+                788f4c4a46b0bc42eda6d9dc453642509ddead
+            f0/
+                a5fec1f9927fe27b46bd99531e8a89b4fe5ea6
+            fc/
+                254c1d12b0dc960b499de7fcc0e9fa21921775
+            info/
+            pack/
+        refs/
+            heads/
+                main
+            remotes/
+                origin/
+                    main
+            tags/
     .virtual_documents/
         notebooks/
             tiles.ipynb
@@ -25,8 +135,11 @@ GenerarTiles/
         config.py
         __init__.py
         processing/
+            run-generator.py
             tile_generation.py
             __init__.py
+            __pycache__/
+                tile_generation.cpython-39.pyc
         utils/
             cuda_utils.py
             dependency_checker.py
