@@ -1,0 +1,1122 @@
+Archivo: .gitignore
+Ruta: E:\entrenamientomaquina\GenerarTiles\.gitignore
+Contenido:
+*.pyc
+__pycache__/
+.ipynb_checkpoints/
+data/processed/*
+data/output/*
+--------------------------------------------------------------------------------
+
+Archivo: contenido_proyecto.txt
+Ruta: E:\entrenamientomaquina\GenerarTiles\contenido_proyecto.txt
+Contenido:
+
+--------------------------------------------------------------------------------
+
+Archivo: create_project.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\create_project.py
+Contenido:
+import os
+
+def create_project_structure(base_path):
+   # Estructura de directorios
+   dirs = [
+       'data/raw',
+       'data/processed',
+       'data/output',
+       'src/processing',
+       'src/utils',
+       'notebooks',
+       'tests'
+   ]
+   
+   # Crear directorios
+   for dir in dirs:
+       os.makedirs(os.path.join(base_path, dir), exist_ok=True)
+
+   # Crear archivos
+   files = {
+       'src/__init__.py': '',
+       'src/processing/__init__.py': '',
+       'src/processing/tile_generation.py': '',
+       'src/utils/__init__.py': '',
+       'src/utils/cuda_utils.py': '',
+       'src/config.py': '',
+       'tests/__init__.py': '',
+       'notebooks/exploratory.ipynb': '',
+       '.gitignore': '*.pyc\n__pycache__/\n.ipynb_checkpoints/',
+       'README.md': '# QGIS Project\n\nDescription of your project here.',
+       'environment.yml': '''name: qgis-env
+channels:
+ - conda-forge
+ - pytorch
+dependencies:
+ - python=3.9
+ - pytorch
+ - torchvision
+ - qgis
+ - gdal'''
+   }
+
+   for file_path, content in files.items():
+       with open(os.path.join(base_path, file_path), 'w') as f:
+           f.write(content)
+
+if __name__ == "__main__":
+   project_path = input("Ingrese la ruta para el proyecto: ")
+   create_project_structure(project_path)
+   print(f"Estructura de proyecto creada en {project_path}")
+--------------------------------------------------------------------------------
+
+Archivo: environment.yml
+Ruta: E:\entrenamientomaquina\GenerarTiles\environment.yml
+Contenido:
+name: qgis-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - qgis
+  - gdal
+  - jupyter
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - pip
+  - pip:
+    - torch==1.12.0+cu124
+    - torchvision==0.13.0+cu124
+    - torchaudio==0.12.0+cu124
+--------------------------------------------------------------------------------
+
+Archivo: estructura_proyecto.txt
+Ruta: E:\entrenamientomaquina\GenerarTiles\estructura_proyecto.txt
+Contenido:
+GenerarTiles/
+    .gitignore
+    contenido_proyecto.txt
+    create_project.py
+    environment.yml
+    estructura_proyecto.txt
+    generate_file_contents.py
+    generate_structure.py
+    README.md
+    symbology-style.db
+    validate_qgis_environment.py
+    .virtual_documents/
+        notebooks/
+            tiles.ipynb
+    data/
+        output/
+        processed/
+        raw/
+    notebooks/
+        exploratory.ipynb
+        tiles.ipynb
+        .ipynb_checkpoints/
+            tiles-checkpoint.ipynb
+    src/
+        config.py
+        __init__.py
+        processing/
+            tile_generation.py
+            __init__.py
+        utils/
+            cuda_utils.py
+            dependency_checker.py
+            test_qgis_initialization.py
+            __init__.py
+            __pycache__/
+                cuda_utils.cpython-312.pyc
+                cuda_utils.cpython-39.pyc
+                dependency_checker.cpython-39.pyc
+                __init__.cpython-312.pyc
+                __init__.cpython-39.pyc
+        __pycache__/
+            config.cpython-39.pyc
+            __init__.cpython-312.pyc
+            __init__.cpython-39.pyc
+    tests/
+        __init__.py
+
+--------------------------------------------------------------------------------
+
+Archivo: generate_file_contents.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\generate_file_contents.py
+Contenido:
+import os
+
+def generate_file_contents(root_dir, output_file):
+    with open(output_file, 'w', encoding='utf-8') as f:
+        for dirpath, dirnames, filenames in os.walk(root_dir):
+            for filename in filenames:
+                file_path = os.path.join(dirpath, filename)
+                f.write(f'Archivo: {filename}\n')
+                f.write(f'Ruta: {file_path}\n')
+                f.write('Contenido:\n')
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        f.write(file.read())
+                except Exception as e:
+                    f.write(f'Error al leer el archivo: {e}\n')
+                f.write('\n' + '-'*80 + '\n\n')
+
+if __name__ == "__main__":
+    root_directory = os.path.dirname(os.path.abspath(__file__))  # Directorio del proyecto
+    output_file = os.path.join(root_directory, 'contenido_proyecto.txt')
+    generate_file_contents(root_directory, output_file)
+    print(f"Contenido del proyecto guardado en: {output_file}")
+--------------------------------------------------------------------------------
+
+Archivo: generate_structure.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\generate_structure.py
+Contenido:
+import os
+
+def generate_structure(root_dir, output_file):
+    with open(output_file, 'w') as f:
+        for dirpath, dirnames, filenames in os.walk(root_dir):
+            level = dirpath.replace(root_dir, '').count(os.sep)
+            indent = ' ' * 4 * level
+            f.write(f'{indent}{os.path.basename(dirpath)}/\n')
+            subindent = ' ' * 4 * (level + 1)
+            for filename in filenames:
+                f.write(f'{subindent}{filename}\n')
+
+if __name__ == "__main__":
+    root_directory = os.path.dirname(os.path.abspath(__file__))  # Directorio del proyecto
+    output_file = os.path.join(root_directory, 'estructura_proyecto.txt')
+    generate_structure(root_directory, output_file)
+    print(f"Estructura del proyecto guardada en: {output_file}")
+--------------------------------------------------------------------------------
+
+Archivo: README.md
+Ruta: E:\entrenamientomaquina\GenerarTiles\README.md
+Contenido:
+# QGIS Project Structure Guide
+
+
+# Proyecto de Generación de Tiles XYZ
+
+## Descripción
+Este proyecto genera tiles XYZ utilizando CUDA y Anaconda.
+
+## Estructura del Proyecto
+- `data/`: Datos crudos, procesados y de salida.
+- `src/`: Código fuente del proyecto.
+  - `processing/`: Scripts de procesamiento de datos.
+  - `utils/`: Utilidades y funciones auxiliares.
+  - `config.py`: Configuraciones del proyecto.
+- `notebooks/`: Notebooks de Jupyter para análisis exploratorio.
+- `tests/`: Pruebas unitarias.
+- `environment.yml`: Dependencias del proyecto.
+- `.gitignore`: Archivos ignorados por git.
+
+## Instalación
+```bash
+conda env create -f [environment.yml](http://_vscodecontentref_/2)
+conda activate qgis-env
+
+## Directory Structure
+
+### /data
+- `raw/`: Datos originales sin procesar
+- `processed/`: Datos procesados intermedios
+- `output/`: Resultados finales (teselas XYZ, etc.)
+
+### /src
+- `processing/`: Scripts principales de procesamiento
+ - `tile_generation.py`: Funciones para generar teselas XYZ
+- `utils/`: Funciones auxiliares
+ - `cuda_utils.py`: Utilidades CUDA/GPU
+- `config.py`: Variables de configuración global
+
+### /notebooks
+- `exploratory.ipynb`: Jupyter notebooks para análisis exploratorio
+
+### /tests
+- Tests unitarios y de integración
+
+## Archivos de Configuración
+
+- `environment.yml`: Dependencias del proyecto (conda/pip)
+- `.gitignore`: Archivos ignorados por git
+- `README.md`: Documentación del proyecto
+
+## Orden de Implementación
+
+1. Configurar entorno:
+  ```bash
+  conda env create -f environment.yml
+  conda activate qgis-env
+--------------------------------------------------------------------------------
+
+Archivo: symbology-style.db
+Ruta: E:\entrenamientomaquina\GenerarTiles\symbology-style.db
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0xe2 in position 31: invalid continuation byte
+
+--------------------------------------------------------------------------------
+
+Archivo: validate_qgis_environment.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\validate_qgis_environment.py
+Contenido:
+import os
+import sys
+from pathlib import Path
+
+def setup_qgis_paths():
+    # Base QGIS installation path
+    qgis_path = Path(r"C:\Program Files\QGIS 3.34.12")
+    
+    paths = {
+        'QGIS_ROOT': qgis_path,
+        'QGIS_PREFIX_PATH': qgis_path / 'apps' / 'qgis-ltr',
+        'QGIS_PYTHON': qgis_path / 'apps' / 'Python312',
+        'QGIS_BIN': qgis_path / 'bin',
+    }
+    
+    # Setup environment variables
+    os.environ['QGIS_PREFIX_PATH'] = str(paths['QGIS_PREFIX_PATH'])
+    os.environ['PYTHONPATH'] = str(paths['QGIS_PREFIX_PATH'] / 'python')
+    os.environ['PATH'] = f"{str(paths['QGIS_BIN'])}{os.pathsep}{os.environ['PATH']}"
+    
+    # Add paths to sys.path
+    python_paths = [
+        str(paths['QGIS_PREFIX_PATH'] / 'python'),
+        str(paths['QGIS_PYTHON'] / 'Lib' / 'site-packages'),
+        str(paths['QGIS_PYTHON']),
+        str(paths['QGIS_PREFIX_PATH'] / 'python' / 'plugins'),
+    ]
+    
+    for path in python_paths:
+        if path not in sys.path and os.path.exists(path):
+            sys.path.append(path)
+            print(f"✓ Added to Python path: {path}")
+    
+    return paths
+
+def validate_paths(paths):
+    all_valid = True
+    for name, path in paths.items():
+        if path.exists():
+            print(f"✓ {name} exists: {path}")
+        else:
+            print(f"✗ {name} not found: {path}")
+            all_valid = False
+    return all_valid
+
+def test_qgis_imports():
+    try:
+        print("\nTesting QGIS imports...")
+        import qgis.core
+        print("✓ Successfully imported qgis.core")
+        return True
+    except ImportError as e:
+        print(f"✗ Failed to import QGIS: {str(e)}")
+        return False
+
+def initialize_qgis():
+    try:
+        print("\nInitializing QGIS...")
+        from qgis.core import QgsApplication
+        from qgis.analysis import QgsNativeAlgorithms
+        
+        qgs = QgsApplication([], False)
+        qgs.initQgis()
+        print("✓ QGIS initialized successfully")
+        
+        # Test processing algorithms
+        print("\nTesting processing algorithms...")
+        QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())
+        print("✓ Native algorithms loaded successfully")
+        
+        qgs.exitQgis()
+        print("✓ QGIS finalized successfully")
+        return True
+    except Exception as e:
+        print(f"✗ Error during QGIS initialization: {str(e)}")
+        return False
+
+def main():
+    print("QGIS Environment Validator")
+    print("-" * 50)
+    
+    # Setup and validate paths
+    print("\nValidating paths...")
+    paths = setup_qgis_paths()
+    paths_valid = validate_paths(paths)
+    
+    if not paths_valid:
+        print("\n✗ Path validation failed. Please check QGIS installation.")
+        return False
+    
+    # Test QGIS imports
+    if not test_qgis_imports():
+        print("\n✗ QGIS import test failed. Check Python environment.")
+        return False
+    
+    # Initialize QGIS
+    if not initialize_qgis():
+        print("\n✗ QGIS initialization failed.")
+        return False
+    
+    print("\n✓ All validations completed successfully!")
+    return True
+
+if __name__ == "__main__":
+    main()
+--------------------------------------------------------------------------------
+
+Archivo: tiles.ipynb
+Ruta: E:\entrenamientomaquina\GenerarTiles\.virtual_documents\notebooks\tiles.ipynb
+Contenido:
+
+
+
+import os
+import sys
+from IPython.display import clear_output
+import logging
+
+class MemoryOptimizedLogger:
+    def __init__(self, max_lines=100):
+        self.max_lines = max_lines
+        self.line_count = 0
+        
+    def log(self, message):
+        print(message, flush=True)
+        self.line_count += 1
+        if self.line_count >= self.max_lines:
+            clear_output(wait=True)
+            self.line_count = 0
+
+logger = MemoryOptimizedLogger()
+
+# Configuración
+project_root = os.path.abspath(os.path.join(os.getcwd(), '..'))
+sys.path.append(project_root)
+
+import torch
+from qgis.core import QgsApplication, QgsRasterLayer
+from qgis.analysis import QgsNativeAlgorithms
+import processing
+
+input_file = r"E:\work\ProyectoCatasPro\06 ORTOFOTOS - copia\Ortofoto_Itagui_2021.ecw"
+output_dir = r"E:\entrenamientomaquina\tiles generados\2021"
+
+def process_tiles():
+    try:
+        logger.log("Iniciando procesamiento...")
+        
+        # CUDA check
+        logger.log(f"CUDA disponible: {torch.cuda.is_available()}")
+        if torch.cuda.is_available():
+            logger.log(f"GPU: {torch.cuda.get_device_name(0)}")
+            torch.cuda.empty_cache()
+
+        # QGIS init
+        qgis_prefix = "C:/OSGeo4W/apps/qgis"
+        QgsApplication.setPrefixPath(qgis_prefix, True)
+        qgs = QgsApplication([], False)
+        qgs.initQgis()
+        QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())
+
+        logger.log("Cargando raster...")
+        raster_layer = QgsRasterLayer(input_file, "ortofoto")
+        if not raster_layer.isValid():
+            raise ValueError("Capa raster inválida")
+
+        params = {
+            'INPUT': raster_layer,
+            'ZOOM_MIN': 0,
+            'ZOOM_MAX': 18,
+            'DPI': 96,
+            'TILE_FORMAT': 0,
+            'QUALITY': 75,
+            'METATILESIZE': 4,
+            'TILE_WIDTH': 256,
+            'TILE_HEIGHT': 256,
+            'TMS_CONVENTION': False,
+            'OUTPUT_DIRECTORY': output_dir
+        }
+
+        logger.log("Generando tiles...")
+        processing.run("gdal:tilesxyz", params)
+        logger.log(f"Tiles generados en: {output_dir}")
+
+    except Exception as e:
+        logger.log(f"Error: {str(e)}")
+    finally:
+        qgs.exitQgis()
+        torch.cuda.empty_cache()
+        logger.log("Proceso finalizado")
+
+process_tiles()
+
+
+import os
+import sys
+from src.utils.dependency_checker import DependencyChecker
+
+# Verificar ambiente
+checker = DependencyChecker()
+status = checker.validate_environment()
+checker.print_status(status)
+
+
+
+
+--------------------------------------------------------------------------------
+
+Archivo: exploratory.ipynb
+Ruta: E:\entrenamientomaquina\GenerarTiles\notebooks\exploratory.ipynb
+Contenido:
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "vscode": {
+     "languageId": "plaintext"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "{\n",
+    " \"cells\": [\n",
+    "  {\n",
+    "   \"cell_type\": \"code\",\n",
+    "   \"execution_count\": null,\n",
+    "   \"metadata\": {},\n",
+    "   \"source\": [\n",
+    "    \"from src.processing.tile_generation import generate_tiles\\n\",\n",
+    "    \"generate_tiles()\"\n",
+    "   ]\n",
+    "  }\n",
+    " ]\n",
+    "}"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
+
+--------------------------------------------------------------------------------
+
+Archivo: tiles.ipynb
+Ruta: E:\entrenamientomaquina\GenerarTiles\notebooks\tiles.ipynb
+Contenido:
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "10b03b9b-f8eb-44ba-910f-2d327d8d3cf1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "019755ed-becc-4b88-8c84-d7aaef30265f",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'torch'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[2], line 24\u001b[0m\n\u001b[0;32m     21\u001b[0m project_root \u001b[38;5;241m=\u001b[39m os\u001b[38;5;241m.\u001b[39mpath\u001b[38;5;241m.\u001b[39mabspath(os\u001b[38;5;241m.\u001b[39mpath\u001b[38;5;241m.\u001b[39mjoin(os\u001b[38;5;241m.\u001b[39mgetcwd(), \u001b[38;5;124m'\u001b[39m\u001b[38;5;124m..\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\u001b[0;32m     22\u001b[0m sys\u001b[38;5;241m.\u001b[39mpath\u001b[38;5;241m.\u001b[39mappend(project_root)\n\u001b[1;32m---> 24\u001b[0m \u001b[38;5;28;01mimport\u001b[39;00m \u001b[38;5;21;01mtorch\u001b[39;00m\n\u001b[0;32m     25\u001b[0m \u001b[38;5;28;01mfrom\u001b[39;00m \u001b[38;5;21;01mqgis\u001b[39;00m\u001b[38;5;21;01m.\u001b[39;00m\u001b[38;5;21;01mcore\u001b[39;00m \u001b[38;5;28;01mimport\u001b[39;00m QgsApplication, QgsRasterLayer\n\u001b[0;32m     26\u001b[0m \u001b[38;5;28;01mfrom\u001b[39;00m \u001b[38;5;21;01mqgis\u001b[39;00m\u001b[38;5;21;01m.\u001b[39;00m\u001b[38;5;21;01manalysis\u001b[39;00m \u001b[38;5;28;01mimport\u001b[39;00m QgsNativeAlgorithms\n",
+      "\u001b[1;31mModuleNotFoundError\u001b[0m: No module named 'torch'"
+     ]
+    }
+   ],
+   "source": [
+    "import os\n",
+    "import sys\n",
+    "from IPython.display import clear_output\n",
+    "import logging\n",
+    "\n",
+    "class MemoryOptimizedLogger:\n",
+    "    def __init__(self, max_lines=100):\n",
+    "        self.max_lines = max_lines\n",
+    "        self.line_count = 0\n",
+    "        \n",
+    "    def log(self, message):\n",
+    "        print(message, flush=True)\n",
+    "        self.line_count += 1\n",
+    "        if self.line_count >= self.max_lines:\n",
+    "            clear_output(wait=True)\n",
+    "            self.line_count = 0\n",
+    "\n",
+    "logger = MemoryOptimizedLogger()\n",
+    "\n",
+    "# Configuración\n",
+    "project_root = os.path.abspath(os.path.join(os.getcwd(), '..'))\n",
+    "sys.path.append(project_root)\n",
+    "\n",
+    "import torch\n",
+    "from qgis.core import QgsApplication, QgsRasterLayer\n",
+    "from qgis.analysis import QgsNativeAlgorithms\n",
+    "import processing\n",
+    "\n",
+    "input_file = r\"E:\\work\\ProyectoCatasPro\\06 ORTOFOTOS - copia\\Ortofoto_Itagui_2021.ecw\"\n",
+    "output_dir = r\"E:\\entrenamientomaquina\\tiles generados\\2021\"\n",
+    "\n",
+    "def process_tiles():\n",
+    "    try:\n",
+    "        logger.log(\"Iniciando procesamiento...\")\n",
+    "        \n",
+    "        # CUDA check\n",
+    "        logger.log(f\"CUDA disponible: {torch.cuda.is_available()}\")\n",
+    "        if torch.cuda.is_available():\n",
+    "            logger.log(f\"GPU: {torch.cuda.get_device_name(0)}\")\n",
+    "            torch.cuda.empty_cache()\n",
+    "\n",
+    "        # QGIS init\n",
+    "        qgis_prefix = \"C:/OSGeo4W/apps/qgis\"\n",
+    "        QgsApplication.setPrefixPath(qgis_prefix, True)\n",
+    "        qgs = QgsApplication([], False)\n",
+    "        qgs.initQgis()\n",
+    "        QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())\n",
+    "\n",
+    "        logger.log(\"Cargando raster...\")\n",
+    "        raster_layer = QgsRasterLayer(input_file, \"ortofoto\")\n",
+    "        if not raster_layer.isValid():\n",
+    "            raise ValueError(\"Capa raster inválida\")\n",
+    "\n",
+    "        params = {\n",
+    "            'INPUT': raster_layer,\n",
+    "            'ZOOM_MIN': 0,\n",
+    "            'ZOOM_MAX': 18,\n",
+    "            'DPI': 96,\n",
+    "            'TILE_FORMAT': 0,\n",
+    "            'QUALITY': 75,\n",
+    "            'METATILESIZE': 4,\n",
+    "            'TILE_WIDTH': 256,\n",
+    "            'TILE_HEIGHT': 256,\n",
+    "            'TMS_CONVENTION': False,\n",
+    "            'OUTPUT_DIRECTORY': output_dir\n",
+    "        }\n",
+    "\n",
+    "        logger.log(\"Generando tiles...\")\n",
+    "        processing.run(\"gdal:tilesxyz\", params)\n",
+    "        logger.log(f\"Tiles generados en: {output_dir}\")\n",
+    "\n",
+    "    except Exception as e:\n",
+    "        logger.log(f\"Error: {str(e)}\")\n",
+    "    finally:\n",
+    "        qgs.exitQgis()\n",
+    "        torch.cuda.empty_cache()\n",
+    "        logger.log(\"Proceso finalizado\")\n",
+    "\n",
+    "process_tiles()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c3e794d8-b551-45ad-bc06-1a3d28e7fe12",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+
+--------------------------------------------------------------------------------
+
+Archivo: tiles-checkpoint.ipynb
+Ruta: E:\entrenamientomaquina\GenerarTiles\notebooks\.ipynb_checkpoints\tiles-checkpoint.ipynb
+Contenido:
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "10b03b9b-f8eb-44ba-910f-2d327d8d3cf1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "019755ed-becc-4b88-8c84-d7aaef30265f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "{\n",
+    " \"cells\": [\n",
+    "  {\n",
+    "   \"cell_type\": \"code\",\n",
+    "   \"execution_count\": null,\n",
+    "   \"metadata\": {},\n",
+    "   \"source\": [\n",
+    "    \"import os\\n\",\n",
+    "    \"import sys\\n\",\n",
+    "    \"from IPython.display import clear_output\\n\",\n",
+    "    \"import logging\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"class MemoryOptimizedLogger:\\n\",\n",
+    "    \"    def __init__(self, max_lines=100):\\n\",\n",
+    "    \"        self.max_lines = max_lines\\n\",\n",
+    "    \"        self.line_count = 0\\n\",\n",
+    "    \"        \\n\",\n",
+    "    \"    def log(self, message):\\n\",\n",
+    "    \"        print(message, flush=True)\\n\",\n",
+    "    \"        self.line_count += 1\\n\",\n",
+    "    \"        if self.line_count >= self.max_lines:\\n\",\n",
+    "    \"            clear_output(wait=True)\\n\",\n",
+    "    \"            self.line_count = 0\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"logger = MemoryOptimizedLogger()\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"# Configuración\\n\",\n",
+    "    \"project_root = os.path.abspath(os.path.join(os.getcwd(), '..'))\\n\",\n",
+    "    \"sys.path.append(project_root)\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"import torch\\n\",\n",
+    "    \"from qgis.core import QgsApplication, QgsRasterLayer\\n\",\n",
+    "    \"from qgis.analysis import QgsNativeAlgorithms\\n\",\n",
+    "    \"import processing\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"input_file = r\\\"E:\\\\work\\\\ProyectoCatasPro\\\\06 ORTOFOTOS - copia\\\\Ortofoto_Itagui_2021.ecw\\\"\\n\",\n",
+    "    \"output_dir = r\\\"E:\\\\entrenamientomaquina\\\\tiles generados\\\\2021\\\"\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"def process_tiles():\\n\",\n",
+    "    \"    try:\\n\",\n",
+    "    \"        logger.log(\\\"Iniciando procesamiento...\\\")\\n\",\n",
+    "    \"        \\n\",\n",
+    "    \"        # CUDA check\\n\",\n",
+    "    \"        logger.log(f\\\"CUDA disponible: {torch.cuda.is_available()}\\\")\\n\",\n",
+    "    \"        if torch.cuda.is_available():\\n\",\n",
+    "    \"            logger.log(f\\\"GPU: {torch.cuda.get_device_name(0)}\\\")\\n\",\n",
+    "    \"            torch.cuda.empty_cache()\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"        # QGIS init\\n\",\n",
+    "    \"        qgis_prefix = \\\"C:/OSGeo4W/apps/qgis\\\"\\n\",\n",
+    "    \"        QgsApplication.setPrefixPath(qgis_prefix, True)\\n\",\n",
+    "    \"        qgs = QgsApplication([], False)\\n\",\n",
+    "    \"        qgs.initQgis()\\n\",\n",
+    "    \"        QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"        logger.log(\\\"Cargando raster...\\\")\\n\",\n",
+    "    \"        raster_layer = QgsRasterLayer(input_file, \\\"ortofoto\\\")\\n\",\n",
+    "    \"        if not raster_layer.isValid():\\n\",\n",
+    "    \"            raise ValueError(\\\"Capa raster inválida\\\")\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"        params = {\\n\",\n",
+    "    \"            'INPUT': raster_layer,\\n\",\n",
+    "    \"            'ZOOM_MIN': 0,\\n\",\n",
+    "    \"            'ZOOM_MAX': 18,\\n\",\n",
+    "    \"            'DPI': 96,\\n\",\n",
+    "    \"            'TILE_FORMAT': 0,\\n\",\n",
+    "    \"            'QUALITY': 75,\\n\",\n",
+    "    \"            'METATILESIZE': 4,\\n\",\n",
+    "    \"            'TILE_WIDTH': 256,\\n\",\n",
+    "    \"            'TILE_HEIGHT': 256,\\n\",\n",
+    "    \"            'TMS_CONVENTION': False,\\n\",\n",
+    "    \"            'OUTPUT_DIRECTORY': output_dir\\n\",\n",
+    "    \"        }\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"        logger.log(\\\"Generando tiles...\\\")\\n\",\n",
+    "    \"        processing.run(\\\"gdal:tilesxyz\\\", params)\\n\",\n",
+    "    \"        logger.log(f\\\"Tiles generados en: {output_dir}\\\")\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"    except Exception as e:\\n\",\n",
+    "    \"        logger.log(f\\\"Error: {str(e)}\\\")\\n\",\n",
+    "    \"    finally:\\n\",\n",
+    "    \"        qgs.exitQgis()\\n\",\n",
+    "    \"        torch.cuda.empty_cache()\\n\",\n",
+    "    \"        logger.log(\\\"Proceso finalizado\\\")\\n\",\n",
+    "    \"\\n\",\n",
+    "    \"process_tiles()\"\n",
+    "   ]\n",
+    "  }\n",
+    " ]\n",
+    "}"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+
+--------------------------------------------------------------------------------
+
+Archivo: config.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\config.py
+Contenido:
+import os
+
+# Directorios de datos
+DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
+RAW_DATA_DIR = os.path.join(DATA_DIR, 'raw')
+PROCESSED_DATA_DIR = os.path.join(DATA_DIR, 'processed')
+OUTPUT_DATA_DIR = os.path.join(DATA_DIR, 'output')
+
+# Archivo de entrada específico
+INPUT_FILE = r"E:\work\ProyectoCatasPro\06 ORTOFOTOS - copia\Ortofoto_Itagui_2021.ecw"
+
+# Directorio de salida específico
+OUTPUT_DIR = r"E:\entrenamientomaquina\tiles generados\2021"
+--------------------------------------------------------------------------------
+
+Archivo: __init__.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\__init__.py
+Contenido:
+
+--------------------------------------------------------------------------------
+
+Archivo: tile_generation.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\processing\tile_generation.py
+Contenido:
+import os
+import torch
+import numpy as np
+from osgeo import gdal
+from qgis.core import QgsApplication, QgsRasterLayer
+from qgis.analysis import QgsNativeAlgorithms
+import processing
+from concurrent.futures import ThreadPoolExecutor
+from src.config import INPUT_FILE, OUTPUT_DIR
+
+class CUDATileGenerator:
+    def __init__(self, input_file, output_dir, batch_size=4):
+        self.input_file = input_file
+        self.output_dir = output_dir
+        self.batch_size = batch_size
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        
+    def initialize_qgis(self):
+        qgis_prefix = "C:/OSGeo4W/apps/qgis"
+        QgsApplication.setPrefixPath(qgis_prefix, True)
+        self.qgs = QgsApplication([], False)
+        self.qgs.initQgis()
+        QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())
+        
+    def load_raster(self):
+        self.dataset = gdal.Open(self.input_file)
+        if not self.dataset:
+            raise ValueError("No se pudo abrir el archivo raster")
+        
+        self.raster_layer = QgsRasterLayer(self.input_file, "ortofoto")
+        if not self.raster_layer.isValid():
+            raise ValueError("Capa raster inválida")
+
+    @torch.cuda.amp.autocast()
+    def process_tile_batch(self, tiles):
+        # Convertir tiles a tensor y mover a GPU
+        tiles_tensor = torch.from_numpy(tiles).to(self.device)
+        
+        # Aplicar optimizaciones
+        with torch.no_grad():
+            # Normalización
+            tiles_tensor = tiles_tensor / 255.0
+            
+            # Mejora de contraste usando CUDA
+            tiles_tensor = torch.clamp(tiles_tensor * 1.2, 0, 1)
+            
+            # Convertir de vuelta a CPU y numpy
+            return (tiles_tensor * 255).cpu().numpy().astype(np.uint8)
+
+    def generate_tiles(self, zoom_min=0, zoom_max=18):
+        self.initialize_qgis()
+        self.load_raster()
+        
+        params = {
+            'INPUT': self.raster_layer,
+            'ZOOM_MIN': zoom_min,
+            'ZOOM_MAX': zoom_max,
+            'DPI': 96,
+            'TILE_FORMAT': 0,  # PNG
+            'QUALITY': 75,
+            'METATILESIZE': self.batch_size,
+            'TILE_WIDTH': 256,
+            'TILE_HEIGHT': 256,
+            'TMS_CONVENTION': False,
+            'OUTPUT_DIRECTORY': self.output_dir
+        }
+
+        try:
+            with ThreadPoolExecutor() as executor:
+                future = executor.submit(processing.run, "gdal:tilesxyz", params)
+                future.result()
+            print(f"Tiles generados exitosamente en: {self.output_dir}")
+            
+        except Exception as e:
+            print(f"Error en la generación de tiles: {str(e)}")
+            
+        finally:
+            self.cleanup()
+
+    def cleanup(self):
+        if hasattr(self, 'qgs'):
+            self.qgs.exitQgis()
+        if hasattr(self, 'dataset'):
+            self.dataset = None
+
+def main():
+    generator = CUDATileGenerator(INPUT_FILE, OUTPUT_DIR)
+    generator.generate_tiles()
+
+if __name__ == "__main__":
+    main()
+--------------------------------------------------------------------------------
+
+Archivo: __init__.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\processing\__init__.py
+Contenido:
+from .tile_generation import generate_tiles
+--------------------------------------------------------------------------------
+
+Archivo: cuda_utils.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\cuda_utils.py
+Contenido:
+import torch
+
+def initialize_cuda():
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+        print(f"Usando dispositivo CUDA: {torch.cuda.get_device_name(device)}")
+    else:
+        print("CUDA no está disponible. Usando CPU.")
+--------------------------------------------------------------------------------
+
+Archivo: dependency_checker.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\dependency_checker.py
+Contenido:
+# src/utils/dependency_checker.py
+import os
+import importlib
+
+class DependencyChecker:
+    def __init__(self):
+        self.required_packages = ['torch', 'qgis.core', 'osgeo.gdal', 'numpy', 'processing']
+        
+    def check_cuda(self):
+        try:
+            import torch
+            return {
+                'available': torch.cuda.is_available(),
+                'device_name': torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+                'device_count': torch.cuda.device_count() if torch.cuda.is_available() else 0
+            }
+        except ImportError:
+            return {'available': False, 'device_name': None, 'device_count': 0}
+
+    def check_qgis_path(self):
+        paths = [
+            "C:/OSGeo4W/apps/qgis",
+            "C:/Program Files/QGIS 3.40.1",
+            os.environ.get('QGIS_PREFIX_PATH', '')
+        ]
+        for path in paths:
+            if path and os.path.exists(path):
+                return path
+        return None
+
+    def check_package(self, package):
+        try:
+            importlib.import_module(package)
+            return True
+        except ImportError:
+            return False
+
+    def validate_environment(self):
+        return {
+            'cuda': self.check_cuda(),
+            'qgis_path': self.check_qgis_path(),
+            'packages': {pkg: self.check_package(pkg) for pkg in self.required_packages}
+        }
+
+    def print_status(self, status):
+        print("\n=== Estado del Ambiente ===")
+        
+        print("\nCUDA:")
+        print(f"Disponible: {status['cuda']['available']}")
+        if status['cuda']['available']:
+            print(f"GPU: {status['cuda']['device_name']}")
+            print(f"Dispositivos: {status['cuda']['device_count']}")
+            
+        print("\nRuta QGIS:")
+        print(f"Válida: {status['qgis_path'] is not None}")
+        if status['qgis_path']:
+            print(f"Ruta: {status['qgis_path']}")
+        else:
+            print("No se encontró una ruta válida para QGIS. Verifica las siguientes rutas y variables de entorno:")
+            print("Rutas verificadas:")
+            print("  - C:/OSGeo4W/apps/qgis")
+            print("  - C:/Program Files/QGIS 3.40.1")
+            print(f"Variable de entorno QGIS_PREFIX_PATH: {os.environ.get('QGIS_PREFIX_PATH', 'No configurada')}")
+            
+        print("\nPaquetes:")
+        for package, installed in status['packages'].items():
+            print(f"{package}: {'✓' if installed else '✗'}")
+
+if __name__ == "__main__":
+    checker = DependencyChecker()
+    status = checker.validate_environment()
+    checker.print_status(status)
+--------------------------------------------------------------------------------
+
+Archivo: test_qgis_initialization.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\test_qgis_initialization.py
+Contenido:
+import os
+import sys
+
+# Asegúrate de que la variable de entorno QGIS_PREFIX_PATH esté configurada correctamente
+qgis_prefix_path = os.environ.get('QGIS_PREFIX_PATH', 'C:/OSGeo4W/apps/qgis')
+os.environ['QGIS_PREFIX_PATH'] = qgis_prefix_path
+
+# Agregar las rutas necesarias a sys.path
+sys.path.append(os.path.join(qgis_prefix_path, 'python'))
+sys.path.append(os.path.join(qgis_prefix_path, 'python', 'plugins'))
+
+try:
+    from qgis.core import QgsApplication, QgsRasterLayer
+    from qgis.analysis import QgsNativeAlgorithms
+    import processing
+
+    # Inicializar QGIS
+    QgsApplication.setPrefixPath(qgis_prefix_path, True)
+    qgs = QgsApplication([], False)
+    qgs.initQgis()
+    
+    # Añadir algoritmos nativos de QGIS
+    QgsApplication.processingRegistry().addProvider(QgsNativeAlgorithms())
+
+    print("QGIS inicializado correctamente.")
+    
+    # Finalizar QGIS
+    qgs.exitQgis()
+    print("QGIS finalizado.")
+except ImportError as e:
+    print(f"Error al importar módulos de QGIS: {e}")
+except Exception as e:
+    print(f"Error al inicializar QGIS: {e}")
+--------------------------------------------------------------------------------
+
+Archivo: __init__.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__init__.py
+Contenido:
+from .cuda_utils import initialize_cuda
+--------------------------------------------------------------------------------
+
+Archivo: cuda_utils.cpython-312.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__pycache__\cuda_utils.cpython-312.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0xcb in position 0: invalid continuation byte
+
+--------------------------------------------------------------------------------
+
+Archivo: cuda_utils.cpython-39.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__pycache__\cuda_utils.cpython-39.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0x93 in position 8: invalid start byte
+
+--------------------------------------------------------------------------------
+
+Archivo: dependency_checker.cpython-39.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__pycache__\dependency_checker.cpython-39.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0x9e in position 8: invalid start byte
+
+--------------------------------------------------------------------------------
+
+Archivo: __init__.cpython-312.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__pycache__\__init__.cpython-312.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0xcb in position 0: invalid continuation byte
+
+--------------------------------------------------------------------------------
+
+Archivo: __init__.cpython-39.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\utils\__pycache__\__init__.cpython-39.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0x8c in position 9: invalid start byte
+
+--------------------------------------------------------------------------------
+
+Archivo: config.cpython-39.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\__pycache__\config.cpython-39.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0xe1 in position 12: invalid continuation byte
+
+--------------------------------------------------------------------------------
+
+Archivo: __init__.cpython-312.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\__pycache__\__init__.cpython-312.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0xcb in position 0: invalid continuation byte
+
+--------------------------------------------------------------------------------
+
+Archivo: __init__.cpython-39.pyc
+Ruta: E:\entrenamientomaquina\GenerarTiles\src\__pycache__\__init__.cpython-39.pyc
+Contenido:
+Error al leer el archivo: 'utf-8' codec can't decode byte 0x86 in position 9: invalid start byte
+
+--------------------------------------------------------------------------------
+
+Archivo: __init__.py
+Ruta: E:\entrenamientomaquina\GenerarTiles\tests\__init__.py
+Contenido:
+
+--------------------------------------------------------------------------------
+

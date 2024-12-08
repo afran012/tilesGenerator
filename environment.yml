@@ -1,0 +1,17 @@
+name: qgis-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - qgis
+  - gdal
+  - jupyter
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - pip
+  - pip:
+    - torch==1.12.0+cu124
+    - torchvision==0.13.0+cu124
+    - torchaudio==0.12.0+cu124
