@@ -8,3 +8,11 @@ def validate_cuda():
     else:
         print("CUDA no está disponible.")
         return False
+
+def validate_cudnn():
+    if torch.backends.cudnn.is_available():
+        print("cuDNN está disponible.")
+        return True
+    else:
+        print("cuDNN no está disponible.")
+        return False

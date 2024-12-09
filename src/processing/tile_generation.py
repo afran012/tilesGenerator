@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 from osgeo import gdal
-from utils.cuda_utils import validate_cuda
+from utils.cuda_utils import validate_cuda, validate_cudnn
 
 class TileGenerator:
     def __init__(self, input_file, output_dir):
@@ -10,9 +10,9 @@ class TileGenerator:
         self.output_dir = output_dir
 
     def generate_tiles(self, zoom_min=0, zoom_max=18):
-        # Validar que CUDA esté disponible
-        if not validate_cuda():
-            print("Error: CUDA no está disponible. No se puede continuar.")
+        # Validar que CUDA y cuDNN estén disponibles
+        if not validate_cuda() or not validate_cudnn():
+            print("Error: CUDA o cuDNN no están disponibles. No se puede continuar.")
             return
 
         # Validar que el archivo de entrada exista
