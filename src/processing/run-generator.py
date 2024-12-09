@@ -32,4 +32,4 @@ OUTPUT_DIR = r"E:\entrenamientomaquina\tiles generados\2021"
 
 # Ejecuta el generador
 generator = TileGenerator(INPUT_FILE, OUTPUT_DIR)
-generator.generate_tiles(zoom_min=11, zoom_max=15)
+generator.generate_tiles(zoom_min=16, zoom_max=20)
