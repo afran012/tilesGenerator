@@ -27,9 +27,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
 from processing.tile_generation import TileGenerator
 
 # Configura tus rutas
-INPUT_FILE = r"E:\entrenamientomaquina\tilescompletos\raster2018.tif"
-OUTPUT_DIR = r"E:\entrenamientomaquina\tiles generados\2018"
+INPUT_FILE = r"E:\entrenamientomaquina\tilescompletos\raster2021.tif"
+OUTPUT_DIR = r"E:\entrenamientomaquina\tiles generados\2021"
 
 # Ejecuta el generador
 generator = TileGenerator(INPUT_FILE, OUTPUT_DIR)
-generator.generate_tiles(zoom_min=9, zoom_max=9)
+generator.generate_tiles(zoom_min=11, zoom_max=15)

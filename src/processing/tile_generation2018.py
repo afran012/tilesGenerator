@@ -26,23 +26,10 @@ class TileGenerator:
             print(f"Error: El archivo de entrada no es un dataset reconocido por GDAL: {self.input_file}")
             return
 
-        # Crear un archivo temporal con las tres primeras bandas
-        temp_file = os.path.join(self.output_dir, 'temp_rgb.tif')
-        translate_command = [
-            'gdal_translate',
-            '-b', '1', '-b', '2', '-b', '3',
-            '-of', 'GTiff',
-            self.input_file,
-            temp_file
-        ]
-
-        # Ejecutar el comando gdal_translate
-        try:
-            subprocess.run(translate_command, check=True)
-            print(f"Archivo temporal creado: {temp_file}")
-        except subprocess.CalledProcessError as e:
-            print(f"Error al crear el archivo temporal: {e}")
-            return
+        # Validar que el directorio de salida exista, si no, crearlo
+        if not os.path.exists(self.output_dir):
+            os.makedirs(self.output_dir)
+            print(f"Directorio de salida creado: {self.output_dir}")
 
         # Ruta completa de gdal2tiles.py
         gdal2tiles_path = os.path.join(os.path.dirname(sys.executable), 'Scripts', 'gdal2tiles.py')
@@ -59,7 +46,7 @@ class TileGenerator:
             '--config', 'GDAL_CACHEMAX', '1024',  # Configurar la caché de GDAL
             '--config', 'GDAL_NUM_THREADS', 'ALL_CPUS',  # Usar todos los núcleos de la CPU
             '--config', 'GDAL_USE_CUDA', 'YES',  # Habilitar el uso de CUDA
-            temp_file,
+            self.input_file,
             self.output_dir
         ]
 
@@ -74,8 +61,3 @@ class TileGenerator:
             print(f"Error al generar tiles: {e}")
         except OSError as e:
             print(f"Error al ejecutar gdal2tiles.py: {e}")
-        finally:
-            # Eliminar el archivo temporal
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
-                print(f"Archivo temporal eliminado: {temp_file}")
